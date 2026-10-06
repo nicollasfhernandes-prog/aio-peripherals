@@ -72,6 +72,14 @@ cargo test --lib                                 # testes dos protocolos
 O uso do app está sujeito aos [Termos de Uso](TERMOS.md): uso por conta e risco, sem garantia e sem
 responsabilidade dos autores por danos. O app mostra esse aviso na primeira vez que é aberto.
 
+## Licença
+
+O código está sob a [licença MIT](LICENSE): você pode usar, copiar, modificar e distribuir, inclusive
+comercialmente, desde que mantenha o aviso de copyright e o texto da licença. As fotos de produtos em
+`src/assets/devices/` **não** estão incluídas na licença (veja abaixo).
+
+*Code licensed under [MIT](LICENSE). Product photos in `src/assets/devices/` are not covered by it.*
+
 ## Marcas e imagens
 
 Logitech, Razer, HyperX, AULA, DeLUX, ATK, VXE e ZOWIE são marcas dos seus respectivos donos.

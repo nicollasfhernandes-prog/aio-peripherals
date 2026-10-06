@@ -14,6 +14,14 @@ software. The UI is available in Portuguese and English (switch in the top bar).
 > ⚠️ ***Use at your own risk. No warranty.** Provided "as is", without warranty of any kind. See the
 > [Terms of Use](TERMOS.md).*
 
+## Download
+
+Baixe o instalador para Windows na página de [Releases](https://github.com/nicollasfhernandes-prog/aio-peripherals/releases/latest)
+(`AIO-Peripherals_x.y.z_x64-setup.exe`). O instalador não é assinado, então o Windows SmartScreen pode
+pedir confirmação: **Mais informações → Executar assim mesmo**.
+
+*Download the Windows installer from [Releases](https://github.com/nicollasfhernandes-prog/aio-peripherals/releases/latest).*
+
 ## Dispositivos suportados
 
 | Marca | Modelos | O que dá pra configurar | Status |

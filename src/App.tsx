@@ -178,7 +178,7 @@ export default function App() {
         </main>
       </div>
       {error && <div className="toast">{tr(error)}</div>}
-      <TermsDialog />
+      <TermsDialog lang={lang} onLang={changeLang} />
     </div>
   );
 }

@@ -1152,3 +1152,19 @@ input[type="range"] {
   background: var(--accent);
   color: var(--accent-ink);
 }
+
+.terms-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.terms-head h2 {
+  margin: 0;
+}
+
+.terms-head .lang-switch {
+  margin-right: 0;
+}

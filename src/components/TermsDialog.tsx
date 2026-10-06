@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { isTauri } from "../api";
-import { tr } from "../i18n";
+import { tr, type Lang } from "../i18n";
 
 // Bump the version to show the dialog again when the terms change.
 const KEY = "terms-accepted-v1";
@@ -15,7 +15,7 @@ function accepted(): boolean {
 }
 
 /** Shown on first launch: use at your own risk, no warranty. Blocks the app until accepted. */
-export function TermsDialog() {
+export function TermsDialog({ lang, onLang }: { lang: Lang; onLang: (l: Lang) => void }) {
   const [open, setOpen] = useState(!accepted());
   if (!open) return null;
 
@@ -31,7 +31,16 @@ export function TermsDialog() {
   return (
     <div className="terms-backdrop" role="dialog" aria-modal="true" aria-labelledby="terms-title">
       <div className="terms-card">
-        <h2 id="terms-title">{tr("Termos de uso")}</h2>
+        <div className="terms-head">
+          <h2 id="terms-title">{tr("Termos de uso")}</h2>
+          <div className="lang-switch" role="group" aria-label={tr("Idioma")}>
+            {(["pt", "en"] as Lang[]).map((l) => (
+              <button key={l} className={lang === l ? "active" : ""} onClick={() => onLang(l)}>
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        </div>
         <p>{tr("Este app altera configurações direto no firmware dos seus mouses, teclados e receptores.")}</p>
         <ul>
           <li>

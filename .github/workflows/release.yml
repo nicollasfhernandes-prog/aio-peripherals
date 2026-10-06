@@ -1,0 +1,55 @@
+# Builds the Windows installer and publishes a GitHub release when a version tag is pushed.
+#   1. bump "version" in src-tauri/tauri.conf.json (e.g. 0.2.0) and commit
+#   2. git tag v0.2.0 && git push origin v0.2.0
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches app version
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          $version = (Get-Content src-tauri/tauri.conf.json -Raw | ConvertFrom-Json).version
+          if ("v$version" -ne "${{ github.ref_name }}") {
+            Write-Error "Tag ${{ github.ref_name }} does not match tauri.conf.json version $version"
+            exit 1
+          }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - run: npm ci
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "AIO Peripherals ${{ github.ref_name }}"
+          releaseBody: |
+            > ⚠️ **Use por sua conta e risco. Sem garantia.** Leia os [Termos de Uso](https://github.com/${{ github.repository }}/blob/main/TERMOS.md). *Use at your own risk, no warranty.*
+
+            **Instalação:** baixe o `*_x64-setup.exe` abaixo. O instalador não é assinado; se o Windows SmartScreen aparecer, clique em **Mais informações → Executar assim mesmo**.
+          releaseDraft: false
+          prerelease: true
+          args: --bundles nsis

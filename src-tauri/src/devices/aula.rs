@@ -123,6 +123,8 @@ pub struct Actuation {
 pub struct KeyboardInfo {
     pub lighting: Option<Lighting>,
     pub actuation: Option<Actuation>,
+    /// Live analog key depth is available (Wooting)
+    pub analog: bool,
 }
 
 struct Aula {
@@ -442,7 +444,7 @@ pub fn list(api: &HidApi, session: &mut Session) -> Vec<DeviceInfo> {
             report_rate,
             onboard_mode: None,
             note: (!supported).then(|| "Detectado, mas o layout de teclas deste modelo ainda não foi mapeado.".into()),
-            keyboard: supported.then_some(KeyboardInfo { lighting, actuation }),
+            keyboard: supported.then_some(KeyboardInfo { lighting, actuation, analog: false }),
             led_zones: None,
             sensor: None,
         });

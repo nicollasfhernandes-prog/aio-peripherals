@@ -32,6 +32,7 @@ pedir confirmação: **Mais informações → Executar assim mesmo**.
 | DeLUX | M900 Pro 8K (receptor LXDDZ `1d57:fa65`) | DPI, polling até 8 kHz, angle snap, ripple, motion sync, LOD, tempo de resposta, bateria | ⚠️ parcial |
 | DeLUX / ATK / VXE | Mouses na plataforma Compx (`VID 3554`) | DPI, polling, LED de DPI, sensor, bateria | 🧪 experimental |
 | Razer | Mouses e teclados (`VID 1532`) | DPI, polling (inclusive HyperPolling), bateria, brilho e efeitos | 🧪 experimental |
+| Wooting | One, Two, Two LE/HE, 60HE, 60HE+, 60HE v2, 80HE, UwU | Iluminação (cor fixa, desligar, voltar ao perfil), profundidade analógica de cada tecla ao vivo | 🧪 experimental |
 | ZOWIE | Mouses (`VID 1af3`) | Apenas detecção (são configurados no próprio mouse) | ℹ️ detecção |
 
 ✅ testado em hardware real · ⚠️ testado em parte · 🧪 implementado a partir de documentação, sem hardware para testar.
@@ -64,7 +65,7 @@ cargo test --lib                                 # testes dos protocolos
 ## Estrutura
 
 - `src-tauri/src/devices/` — um driver por família (`logitech.rs`, `aula.rs`, `hyperx.rs`,
-  `compx.rs`, `lxd.rs`, `razer.rs`, `zowie.rs`)
+  `compx.rs`, `lxd.rs`, `razer.rs`, `wooting.rs`, `zowie.rs`)
 - `src/` — interface React; `src/i18n.ts` tem as traduções e `src/devices.ts` o catálogo de fotos
 
 ## Créditos dos protocolos
@@ -73,6 +74,7 @@ cargo test --lib                                 # testes dos protocolos
 - Razer: protocolo documentado pelo [OpenRazer](https://github.com/openrazer/openrazer)
 - HyperX Haste 2: [haste2ctl](https://github.com/fspy/haste2ctl), e capturas próprias do NGENUITY (angle snapping, LOD, bateria)
 - Receptor LXDDZ 8K: notas em [OpenMouse-Project/mouse-protocol#171](https://github.com/OpenMouse-Project/mouse-protocol/issues/171)
+- Wooting: SDKs oficiais [wooting-rgb-sdk](https://github.com/WootingKb/wooting-rgb-sdk) e [wooting-analog-sdk](https://github.com/WootingKb/wooting-analog-sdk) (MPL-2.0)
 - AULA e Compx: análise dos drivers web oficiais das marcas
 
 ## Termos de uso
@@ -90,6 +92,6 @@ comercialmente, desde que mantenha o aviso de copyright e o texto da licença. A
 
 ## Marcas e imagens
 
-Logitech, Razer, HyperX, AULA, DeLUX, ATK, VXE e ZOWIE são marcas dos seus respectivos donos.
+Logitech, Razer, HyperX, AULA, DeLUX, ATK, VXE, Wooting e ZOWIE são marcas dos seus respectivos donos.
 Este projeto não é afiliado a nenhuma delas. As fotos dos produtos em `src/assets/devices/`
 pertencem aos fabricantes e estão aqui só para identificar os dispositivos no app.

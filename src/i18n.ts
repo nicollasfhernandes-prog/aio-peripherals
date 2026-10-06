@@ -140,6 +140,16 @@ const EN: Record<string, string> = {
   "O texto completo está no arquivo TERMOS.md do repositório.": "The full text is in the repository's TERMOS.md file.",
   Sair: "Exit",
   "Li e aceito": "I have read and accept",
+  // wooting
+  "Analógico ao vivo": "Live analog",
+  "Pico: {n}% do curso.": "Peak: {n}% of travel.",
+  "Ative para ver a profundidade de cada tecla em tempo real.": "Turn on to see how far each key is pressed in real time.",
+  "Perfil do teclado": "Keyboard profile",
+  "Suporte experimental (SDKs oficiais da Wooting), ainda não testado. Atuação e Rapid Trigger continuam no Wootility.":
+    "Experimental support (official Wooting SDKs), not yet tested. Actuation and Rapid Trigger stay in Wootility.",
+  "interface de configuração da Wooting não encontrada": "Wooting configuration interface not found",
+  "interface analógica não encontrada": "analog interface not found",
+  "o teclado não respondeu": "the keyboard did not respond",
   // backend notes
   "Receptor encontrado, mas o mouse está desligado ou dormindo. Mexa nele e atualize.":
     "Receiver found, but the mouse is off or asleep. Move it and refresh.",

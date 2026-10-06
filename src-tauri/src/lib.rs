@@ -2,7 +2,7 @@ pub mod devices;
 
 use std::sync::Mutex;
 
-use devices::{aula, compx, hyperx, logitech, lxd, razer, DeviceInfo, Sessions};
+use devices::{aula, compx, hyperx, logitech, lxd, razer, wooting, DeviceInfo, Sessions};
 use hidapi::HidApi;
 use tauri::{AppHandle, Emitter, Manager, State};
 
@@ -10,6 +10,7 @@ struct Backend {
     api: HidApi,
     sessions: Sessions,
     monitor: Option<aula::Monitor>,
+    analog: Option<wooting::Monitor>,
 }
 
 struct Hid(Mutex<Backend>);
@@ -89,6 +90,8 @@ async fn set_led(hid: State<'_, Hid>, id: String, zone: u8, effect: logitech::Le
             hyperx::set_led(api, &mut s.hyperx, &id, &effect)
         } else if id.starts_with("razer:") {
             razer::set_led(api, &mut s.razer, &id, zone, &effect)
+        } else if id.starts_with("wooting:") {
+            wooting::set_led(api, &mut s.wooting, &id, &effect)
         } else {
             logitech::set_led(api, &mut s.logitech, &id, zone, &effect)
         }
@@ -128,6 +131,24 @@ async fn stop_key_monitor(hid: State<'_, Hid>) -> Result<(), String> {
     Ok(())
 }
 
+/// Streams `analog-keys` events ([[hid code, depth 0-1000], ...]) until `stop_analog_monitor`.
+#[tauri::command]
+async fn start_analog_monitor(app: AppHandle, hid: State<'_, Hid>, id: String) -> Result<(), String> {
+    let mut b = hid.0.lock().map_err(|e| e.to_string())?;
+    b.analog = None;
+    let monitor = wooting::start_monitor(&b.api, &id, move |frame| {
+        let _ = app.emit("analog-keys", frame);
+    })?;
+    b.analog = Some(monitor);
+    Ok(())
+}
+
+#[tauri::command]
+async fn stop_analog_monitor(hid: State<'_, Hid>) -> Result<(), String> {
+    hid.0.lock().map_err(|e| e.to_string())?.analog = None;
+    Ok(())
+}
+
 #[tauri::command]
 async fn set_onboard_mode(hid: State<'_, Hid>, id: String, onboard: bool) -> Result<(), String> {
     with_backend(&hid, |api, s| logitech::set_onboard_mode(api, &mut s.logitech, &id, onboard))
@@ -138,12 +159,15 @@ pub fn run() {
     let api = HidApi::new().expect("failed to initialise hidapi");
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .manage(Hid(Mutex::new(Backend { api, sessions: Sessions::default(), monitor: None })))
+        .manage(Hid(Mutex::new(Backend { api, sessions: Sessions::default(), monitor: None, analog: None })))
         .on_window_event(|window, event| {
             // Never leave the keyboard in test mode after the app closes.
             if let tauri::WindowEvent::Destroyed = event {
                 if let Ok(mut b) = window.state::<Hid>().0.lock() {
                     b.monitor = None;
+                    b.analog = None;
+                    // Give lighting back to the keyboards' own profiles.
+                    b.sessions.wooting.restore_all();
                 }
             }
         })
@@ -158,7 +182,9 @@ pub fn run() {
             stop_key_monitor,
             set_custom_colors,
             set_led,
-            set_sensor
+            set_sensor,
+            start_analog_monitor,
+            stop_analog_monitor
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -27,7 +27,7 @@ export interface LedZone {
 }
 
 export interface LedEffect {
-  kind: "off" | "static" | "cycle" | "breathe";
+  kind: "off" | "static" | "cycle" | "breathe" | "profile";
   color: [number, number, number];
   periodMs: number;
   /** 1-100 */
@@ -73,7 +73,7 @@ export interface Device {
   reportRate: { currentHz: number; supportedHz: number[] } | null;
   onboardMode: boolean | null;
   note: string | null;
-  keyboard: { lighting: Lighting | null; actuation: Actuation | null } | null;
+  keyboard: { lighting: Lighting | null; actuation: Actuation | null; analog?: boolean } | null;
   ledZones: LedZone[] | null;
   sensor: SensorSettings | null;
 }
@@ -168,6 +168,23 @@ let mock: Device[] = [
         keys: WIN60.map((k) => ({ index: k.index, mode: 0, travel: 39, press: 98, release: 98 })),
       },
     },
+  },
+  {
+    id: "wooting:31e3:1302",
+    name: "60HE",
+    vendor: "Wooting",
+    kind: "keyboard",
+    connection: "USB",
+    online: true,
+    supported: true,
+    battery: null,
+    dpi: null,
+    reportRate: null,
+    onboardMode: null,
+    note: "Suporte experimental (SDKs oficiais da Wooting), ainda não testado. Atuação e Rapid Trigger continuam no Wootility.",
+    keyboard: { lighting: null, actuation: null, analog: true },
+    ledZones: [{ index: 0, name: "Iluminação", effects: ["profile", "static", "off"] }],
+    sensor: null,
   },
 ];
 
@@ -266,5 +283,32 @@ export async function startKeyMonitor(id: string, onBatch: (batch: [number, numb
   return () => {
     unlisten();
     invoke("stop_key_monitor").catch(() => {});
+  };
+}
+
+/** Streams the depth (0-1000) of every pressed key on a Wooting keyboard. Returns a stop function. */
+export async function startAnalogMonitor(id: string, onFrame: (frame: [number, number][]) => void): Promise<() => void> {
+  if (!isTauri) {
+    let t = 0;
+    const timer = window.setInterval(() => {
+      t += 0.06;
+      onFrame(
+        [0x1a, 0x04, 0x16, 0x07]
+          .map((k, i) => [k, Math.round(Math.max(0, Math.sin(t * 2 + i)) * 1000)] as [number, number])
+          .filter(([, v]) => v > 0),
+      );
+    }, 16);
+    return () => window.clearInterval(timer);
+  }
+  const unlisten = await listen<[number, number][]>("analog-keys", (e) => onFrame(e.payload));
+  try {
+    await invoke("start_analog_monitor", { id });
+  } catch (e) {
+    unlisten();
+    throw e;
+  }
+  return () => {
+    unlisten();
+    invoke("stop_analog_monitor").catch(() => {});
   };
 }

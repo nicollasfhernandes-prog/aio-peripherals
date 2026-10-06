@@ -218,6 +218,7 @@ const MOUSE_EFFECTS: { kind: LedEffect["kind"]; label: string }[] = [
   { kind: "static", label: "Fixo" },
   { kind: "cycle", label: "Ciclo" },
   { kind: "breathe", label: "Respirar" },
+  { kind: "profile", label: "Perfil do teclado" },
 ];
 
 const DEFAULT_EFFECT: LedEffect = { kind: "cycle", color: [0, 255, 255], periodMs: 5000, brightness: 100 };
@@ -282,7 +283,9 @@ export function MouseLightingPanel({ state }: { state: MouseLightingState }) {
         </label>
       </div>
       {shown.map((z) => {
-        const fx = effects.get(z.index) ?? DEFAULT_EFFECT;
+        const saved = effects.get(z.index) ?? DEFAULT_EFFECT;
+        // Fall back to the zone's first effect when the remembered one isn't supported here.
+        const fx = z.effects.includes(saved.kind) ? saved : { ...saved, kind: z.effects[0] as LedEffect["kind"] };
         const set = (patch: Partial<LedEffect>) => update(z.index, { ...fx, ...patch });
         // Period runs 1-20 s; show it as a speed where right = faster.
         const speed = Math.round(((20000 - fx.periodMs) / 19000) * 100);

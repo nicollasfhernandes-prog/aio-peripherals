@@ -18,6 +18,7 @@ import {
   useMouseLighting,
 } from "./Lighting";
 import { SensorPanel } from "./SensorPanel";
+import { AnalogPanel } from "./AnalogPanel";
 import { BackIcon, BatteryIcon, BoltIcon } from "./Icons";
 
 const DPI_PRESETS = [400, 800, 1600, 3200];
@@ -85,6 +86,7 @@ export function DeviceDetail({ device, onBack, onChanged, onError }: Props) {
             <span className="muted">
               {device.vendor} · {device.connection}
             </span>
+            {device.supported && device.online && device.note && <p className="hero-note">{tr(device.note)}</p>}
           </header>
           <div className="hero-art">
             {actuation ? (
@@ -196,6 +198,7 @@ export function DeviceDetail({ device, onBack, onChanged, onError }: Props) {
             </section>
           )}
 
+          {device.keyboard?.analog && <AnalogPanel key={device.id} id={device.id} onError={onError} />}
           {device.sensor && <SensorPanel key={device.id} id={device.id} sensor={device.sensor} onError={onError} />}
 
           {device.onboardMode !== null && (

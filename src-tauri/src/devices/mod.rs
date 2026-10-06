@@ -4,6 +4,7 @@ pub mod hyperx;
 pub mod logitech;
 pub mod lxd;
 pub mod razer;
+pub mod wooting;
 pub mod zowie;
 
 use hidapi::HidApi;
@@ -84,6 +85,7 @@ pub struct Sessions {
     pub hyperx: hyperx::Session,
     pub lxd: lxd::Session,
     pub razer: razer::Session,
+    pub wooting: wooting::Session,
 }
 
 pub fn list(api: &HidApi, s: &mut Sessions) -> Vec<DeviceInfo> {
@@ -93,6 +95,7 @@ pub fn list(api: &HidApi, s: &mut Sessions) -> Vec<DeviceInfo> {
     out.extend(hyperx::list(api, &mut s.hyperx));
     out.extend(lxd::list(api, &mut s.lxd));
     out.extend(razer::list(api, &mut s.razer));
+    out.extend(wooting::list(api, &mut s.wooting));
     out.extend(zowie::list(api));
     out
 }

@@ -4,6 +4,7 @@ import { isTauri, listDevices, type Device } from "./api";
 import { deviceImage } from "./devices";
 import { getLang, setLang, tr, type Lang } from "./i18n";
 import { DeviceDetail } from "./components/DeviceDetail";
+import { TermsDialog } from "./components/TermsDialog";
 import { BatteryIcon, BoltIcon, KeyboardIcon, MouseIcon, RefreshIcon, UsbIcon, WinClose, WinMax, WinMin, WirelessIcon } from "./components/Icons";
 import "./App.css";
 
@@ -177,6 +178,7 @@ export default function App() {
         </main>
       </div>
       {error && <div className="toast">{tr(error)}</div>}
+      <TermsDialog />
     </div>
   );
 }

@@ -1083,3 +1083,72 @@ input[type="range"] {
   background: var(--accent);
   color: var(--accent-ink);
 }
+
+/* Terms of use dialog */
+.terms-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(6, 7, 8, 0.78);
+  backdrop-filter: blur(3px);
+}
+
+.terms-card {
+  width: min(520px, 100%);
+  padding: 24px 26px 20px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.terms-card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.terms-card p,
+.terms-card li {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.terms-card ul {
+  margin: 10px 0 14px;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.terms-card strong {
+  color: var(--warn);
+}
+
+.terms-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.terms-btn {
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.terms-btn.secondary {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.terms-btn.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}

@@ -6,6 +6,14 @@ de cada software do fabricante. Feito com [Tauri 2](https://tauri.app) (Rust) + 
 *One desktop app to configure mice and keyboards from several brands, without each vendor's
 software. The UI is available in Portuguese and English (switch in the top bar).*
 
+> ⚠️ **Use por sua conta e risco. Sem garantia.** Este software é fornecido "no estado em que se
+> encontra", sem garantia de qualquer tipo, e altera configurações direto no firmware dos dispositivos.
+> Os autores não se responsabilizam por danos a hardware, perda de configurações, travamentos ou perda
+> de garantia do fabricante. Leia os [Termos de Uso](TERMOS.md) antes de usar.
+>
+> ⚠️ ***Use at your own risk. No warranty.** Provided "as is", without warranty of any kind. See the
+> [Terms of Use](TERMOS.md).*
+
 ## Dispositivos suportados
 
 | Marca | Modelos | O que dá pra configurar | Status |
@@ -21,8 +29,8 @@ software. The UI is available in Portuguese and English (switch in the top bar).
 ✅ testado em hardware real · ⚠️ testado em parte · 🧪 implementado a partir de documentação, sem hardware para testar.
 
 > **Aviso:** o app conversa diretamente com o firmware dos dispositivos. Os drivers experimentais
-> foram escritos sem o hardware em mãos. Use por sua conta e risco, e evite deixar o software
-> oficial da marca aberto ao mesmo tempo (os dois disputam o dispositivo).
+> foram escritos sem o hardware em mãos e podem enviar comandos incorretos. Evite deixar o software
+> oficial da marca aberto ao mesmo tempo (os dois disputam o dispositivo). Veja os [Termos de Uso](TERMOS.md).
 
 ## Como rodar
 
@@ -58,6 +66,11 @@ cargo test --lib                                 # testes dos protocolos
 - HyperX Haste 2: [haste2ctl](https://github.com/fspy/haste2ctl), e capturas próprias do NGENUITY (angle snapping, LOD, bateria)
 - Receptor LXDDZ 8K: notas em [OpenMouse-Project/mouse-protocol#171](https://github.com/OpenMouse-Project/mouse-protocol/issues/171)
 - AULA e Compx: análise dos drivers web oficiais das marcas
+
+## Termos de uso
+
+O uso do app está sujeito aos [Termos de Uso](TERMOS.md): uso por conta e risco, sem garantia e sem
+responsabilidade dos autores por danos. O app mostra esse aviso na primeira vez que é aberto.
 
 ## Marcas e imagens
 

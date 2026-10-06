@@ -124,6 +124,22 @@ const EN: Record<string, string> = {
   "Altura de levantamento (LOD)": "Lift-off distance",
   "Debounce do clique": "Click debounce",
   "Menor é mais rápido, mas baixo demais pode gerar cliques duplos.": "Lower is faster, but too low can cause accidental double clicks.",
+  // terms
+  "Termos de uso": "Terms of use",
+  "Este app altera configurações direto no firmware dos seus mouses, teclados e receptores.":
+    "This app changes settings directly in the firmware of your mice, keyboards and receivers.",
+  "Use por sua conta e risco.": "Use at your own risk.",
+  "Alguns drivers são experimentais e foram feitos sem o aparelho para testar.":
+    "Some drivers are experimental and were written without the hardware to test on.",
+  "Sem garantia.": "No warranty.",
+  'O software é fornecido "no estado em que se encontra", sem garantia de qualquer tipo.':
+    'The software is provided "as is", without warranty of any kind.',
+  "Os autores não se responsabilizam por danos ao hardware, perda de configurações, travamentos ou perda da garantia do fabricante.":
+    "The authors are not liable for hardware damage, lost settings, crashes or loss of the manufacturer's warranty.",
+  "Não é afiliado a nenhuma das marcas suportadas.": "Not affiliated with any of the supported brands.",
+  "O texto completo está no arquivo TERMOS.md do repositório.": "The full text is in the repository's TERMOS.md file.",
+  Sair: "Exit",
+  "Li e aceito": "I have read and accept",
   // backend notes
   "Receptor encontrado, mas o mouse está desligado ou dormindo. Mexa nele e atualize.":
     "Receiver found, but the mouse is off or asleep. Move it and refresh.",

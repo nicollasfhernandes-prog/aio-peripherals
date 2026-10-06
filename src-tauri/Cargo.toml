@@ -1,6 +1,6 @@
 [package]
 name = "openmouse"
-version = "0.1.0"
+version = "0.2.0"
 description = "AIO Peripherals - all your gear in one app"
 authors = ["nicollasfhernandes-prog"]
 license = "MIT"
